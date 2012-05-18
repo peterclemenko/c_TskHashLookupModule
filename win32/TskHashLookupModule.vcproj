@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="TskHashLookupModule"
-	ProjectGUID="{00E3B0EE-B612-433A-A43E-1CE0B3DE1015}"
+	ProjectGUID="{430B8E55-C5F4-4936-A0C7-DABD8B34788A}"
 	RootNamespace="EntropyModule"
 	TargetFrameworkVersion="196613"
 	>
