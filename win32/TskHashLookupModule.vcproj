@@ -3,9 +3,8 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="TskHashLookupModule"
-	ProjectGUID="{F57C8B17-AFFD-4393-8150-082EC4AAD3AD}"
-	RootNamespace="TskHashLookupModule"
-	Keyword="Win32Proj"
+	ProjectGUID="{00E3B0EE-B612-433A-A43E-1CE0B3DE1015}"
+	RootNamespace="EntropyModule"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -21,7 +20,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -41,12 +40,10 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(TSK_HOME)&quot;;&quot;$(TSK_HOME)\framework&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;TSKHASHLOOKUPMODULE_EXPORTS"
+				AdditionalIncludeDirectories="&quot;$(TSK_HOME)&quot;;&quot;$(TSK_HOME)\framework&quot;;&quot;$(POCO_HOME)\Foundation\include&quot;;&quot;$(POCO_HOME)\Util\include&quot;;&quot;$(POCO_HOME)\XML\include&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -61,11 +58,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="framework.lib libtsk.lib"
-				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(TSK_HOME)\framework\win32\framework\$(ConfigurationName)&quot;;&quot;$(TSK_HOME)\win32\$(ConfigurationName)&quot;"
+				AdditionalDependencies="libtskframework.lib libtsk.lib"
+				AdditionalLibraryDirectories="&quot;$(TSK_HOME)\win32\$(ConfigurationName)&quot;;&quot;$(TSK_HOME)\framework\win32\framework\$(ConfigurationName)&quot;;&quot;$(POCO_HOME)\lib&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -88,6 +83,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -95,7 +91,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -117,11 +113,9 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(TSK_HOME)&quot;;&quot;$(TSK_HOME)\framework&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;TSKHASHLOOKUPMODULE_EXPORTS"
+				AdditionalIncludeDirectories="&quot;$(TSK_HOME)&quot;;&quot;$(TSK_HOME)\framework&quot;;&quot;$(POCO_HOME)\Foundation\include&quot;;&quot;$(POCO_HOME)\Util\include&quot;;&quot;$(POCO_HOME)\XML\include&quot;"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -136,11 +130,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="framework.lib libtsk.lib"
-				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(TSK_HOME)\framework\win32\framework\$(ConfigurationName)&quot;;&quot;$(TSK_HOME)\win32\$(ConfigurationName)&quot;"
+				AdditionalDependencies="libtskframework.lib libtsk.lib"
+				AdditionalLibraryDirectories="&quot;$(TSK_HOME)\win32\$(ConfigurationName)&quot;;&quot;$(TSK_HOME)\framework\win32\framework\$(ConfigurationName)&quot;;&quot;$(POCO_HOME)\lib&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -165,6 +157,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="mkdir $(OutDir)\Modules&#x0D;&#x0A;copy $(OutDir)\$(ProjectName).dll $(OutDir)\Modules&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -177,7 +170,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\TskHashLookup.cpp"
+				RelativePath="..\TskHashLookupModule.cpp"
 				>
 			</File>
 		</Filter>
