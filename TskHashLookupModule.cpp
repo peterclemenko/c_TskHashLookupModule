@@ -120,7 +120,7 @@ extern "C"
         }
         catch (TskException& ex) {
             std::wstringstream msg;
-            msg << L"NSRL Lookup Module - Error getting hash for file id " << pFile->id() << L" : " << ex.what();
+            msg << L"NSRL Lookup Module - Error getting hash for file id " << pFile->getId() << L" : " << ex.what();
             LOGERROR(msg.str());
             return TskModule::FAIL;
         }
