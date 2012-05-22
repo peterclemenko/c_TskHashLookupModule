@@ -25,13 +25,12 @@ static TSK_HDB_INFO* pHDBInfo = NULL;
 extern "C" 
 {
     /**
-     * Module initialization function. Receives the path of a NSRL hash 
-     * database index file as an intialization argument, typically read by the
-     * caller from a pipeline configuration file. Returns TskModule::OK if the
-     * module successfully opens the index file.  
+     * Module initialization function. Receives the path to a NSRL hash 
+     * database index file, typically read by the caller from a pipeline 
+     * configuration file.
      *
-     * @param args Initialization arguments.
-     * @return TskModule::OK if initialization succeeded, otherwise TskModule::FAIL.
+     * @param args The path to a NSRL hash database index file.
+     * @return TskModule::OK if index file opened, TskModule::FAIL otherwise.
      */
     TskModule::Status TSK_MODULE_EXPORT initialize(std::string& args)
     {
@@ -48,7 +47,6 @@ extern "C"
         // Open the NSRL hash database index file.
         pHDBInfo = tsk_hdb_open(&dbname[0], TSK_HDB_OPEN_IDXONLY);
         if (pHDBInfo == NULL) {
-            // @@@ should have TSK error message in here
             LOGERROR(L"NSRL Lookup module failed to open database");
             return TskModule::FAIL;
         }
@@ -64,11 +62,11 @@ extern "C"
     /**
      * Module execution function. Receives a pointer to a file the module is to
      * process. The file is represented by a TskFile interface which is queried
-     * to get the MD5 hash of the file. The hash is then used do a look up in
-     * the hash database. If the look up succeeds, a request to terminate 
+     * to get the MD5 hash of the file. The hash is then used do a lookup in
+     * the hash database. If the lookup succeeds, a request to terminate 
      * processing of the file is issued.
      *
-     * @param pFile A pointer to a file for which the hash database look up is top be performed.
+     * @param pFile File for which the hash database lookup is to be performed.
      * @returns TskModule::OK on success, TskModule::FAIL on error, or TskModule::STOP if the look up succeeds.
      */
     TskModule::Status TSK_MODULE_EXPORT run(TskFile * pFile)
@@ -94,7 +92,7 @@ extern "C"
         }
         catch (TskException& ex) {
             std::wstringstream msg;
-            msg << L"NSRL Lookup Module - Error getting hash : " << ex.what();
+            msg << L"NSRL Lookup Module - Error getting hash for file id " << pFile->getId() << L" : " << ex.what();
             LOGERROR(msg.str());
             return TskModule::FAIL;
         }
