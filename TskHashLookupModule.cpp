@@ -114,7 +114,7 @@ extern "C"
 
             // If hash is found in database, stop further processing of file.
             if (tsk_hdb_lookup_str(pHDBInfo, md5.c_str(), TSK_HDB_FLAG_QUICK, NULL, NULL) == 1) {
-                TskServices::Instance().getImgDB().updateKnownStatus(pFile->id(), TskImgDB::IMGDB_FILES_KNOWN);
+                TskServices::Instance().getImgDB().updateKnownStatus(pFile->getId(), TskImgDB::IMGDB_FILES_KNOWN);
                 return TskModule::STOP;
             }
         }
