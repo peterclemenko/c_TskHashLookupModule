@@ -9,20 +9,38 @@
  */
 
 /** \file TskHashLookup.cpp
- * Contains an implementation of a hash look up file analysis module.
- * This module currently looks up a given file's MD5 hash value in the NSRL hash database.
- * If the hash is found, the module issues a request to stop processing the file.
- * TODO:
- * - Provide an initialization argument to determine whether or not STOP requests are issued
- *   when a look up succeeds.
- * - Support additional hash databases, possibly in separate modules.
- * - Support notable file look ups, e.g., in user-specified EnCase hash sets. 
- * - Record the look up results on the blackboard. 
- * - Make a downstream module to issue stop requests after reading results 
- *   from the blackboard. This would allow for multiple decision making criteria
- *   and would support the ability to insert additional processing between the 
- *   look up and the decision.
- */
+  * Contains an implementation of a hash look up file analysis module.
+  *
+  * MODULE DESCRIPTION
+  *
+  * This module is a file analysis module that looks up a given file's MD5 hash 
+  * value in the NSRL hash database. If the hash is found, the module issues a 
+  * request to stop processing of the file.
+  * 
+  * TODO:
+  * - Provide an initialization argument to specify whether or not stop 
+  *   requests should be issued when a look up succeeds.
+  * - Support additional hash databases, possibly in separate modules.
+  * - Support notable file lookups, e.g., using user-specified EnCase hash 
+  *   sets. 
+  * - Record the lookup results on the blackboard. 
+  * - Make a downstream module to issue stop requests after reading results 
+  *   from the blackboard. This would allow for multiple decision making 
+  *   criteria to be applied and would support the ability to insert additional 
+  *   processing modules into the file analysis pipeline between the hash
+  *   lookup module and the decision module.
+  *
+  * MODULE USAGE
+  * 
+  * Configure the file analysis pipeline to include this module by adding a 
+  * "MODULE" element to the pipeline configuration file. The "arguments" 
+  * attribute of the "MODULE" element must be set to the path of an NSRL 
+  * database index file. 
+  *
+  * See http://www.sleuthkit.org/informer/sleuthkit-informer-7.html#nsrl for 
+  * instructions on using the Sleuthkit's hfind tool to create an NSRL database 
+  * index file.
+  */
 
 // System includes
 #include <sstream>
@@ -35,13 +53,12 @@ static TSK_HDB_INFO* pHDBInfo = NULL;
 extern "C" 
 {
     /**
-     * Module initialization function. Receives the path of a NSRL hash 
-     * database index file as an intialization argument, typically read by the
-     * caller from a pipeline configuration file. Returns TskModule::OK if the
-     * module successfully opens the index file.  
+     * Module initialization function. Receives the path to a NSRL hash 
+     * database index file, typically read by the caller from a pipeline 
+     * configuration file.
      *
-     * @param args Initialization arguments.
-     * @return TskModule::OK if initialization succeeded, otherwise TskModule::FAIL.
+     * @param args The path to a NSRL hash database index file.
+     * @return TskModule::OK if index file opened, TskModule::FAIL otherwise.
      */
     TskModule::Status TSK_MODULE_EXPORT initialize(std::string& args)
     {
@@ -58,7 +75,6 @@ extern "C"
         // Open the NSRL hash database index file.
         pHDBInfo = tsk_hdb_open(&dbname[0], TSK_HDB_OPEN_IDXONLY);
         if (pHDBInfo == NULL) {
-            // @@@ should have TSK error message in here
             LOGERROR(L"NSRL Lookup module failed to open database");
             return TskModule::FAIL;
         }
@@ -74,11 +90,11 @@ extern "C"
     /**
      * Module execution function. Receives a pointer to a file the module is to
      * process. The file is represented by a TskFile interface which is queried
-     * to get the MD5 hash of the file. The hash is then used do a look up in
-     * the hash database. If the look up succeeds, a request to terminate 
+     * to get the MD5 hash of the file. The hash is then used do a lookup in
+     * the hash database. If the lookup succeeds, a request to terminate 
      * processing of the file is issued.
      *
-     * @param pFile A pointer to a file for which the hash database look up is top be performed.
+     * @param pFile File for which the hash database lookup is to be performed.
      * @returns TskModule::OK on success, TskModule::FAIL on error, or TskModule::STOP if the look up succeeds.
      */
     TskModule::Status TSK_MODULE_EXPORT run(TskFile * pFile)
@@ -104,7 +120,7 @@ extern "C"
         }
         catch (TskException& ex) {
             std::wstringstream msg;
-            msg << L"NSRL Lookup Module - Error getting hash : " << ex.what();
+            msg << L"NSRL Lookup Module - Error getting hash for file id " << pFile->getId() << L" : " << ex.what();
             LOGERROR(msg.str());
             return TskModule::FAIL;
         }
