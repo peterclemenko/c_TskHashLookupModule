@@ -9,12 +9,10 @@ This module is for the C++ Sleuth Kit Framework.
 DESCRIPTION
 
 This module is a file analysis module that looks up a file's MD5 
-hash value in a hash database.  Hash databases are used to identify
-files that are 'known' and previously seen.  Known files can be 
-both good (such as standard OS files) or bad (such as contraband).
-
-This module currently only supports looking up files in a 
-NIST NSRL database. 
+hash value in one or more hash databases that have been indexed using the
+Sleuth Kit's hfind tool.  Hash databases are used to identify files that are
+'known' and previously seen.  Known files can be both good (such as standard 
+OS files) or bad (such as contraband).
 
 
 USAGE
@@ -26,26 +24,29 @@ to the pipeline:
     http://www.sleuthkit.org/sleuthkit/docs/framework-docs/
 
 
-The module takes the path to the NSRL index file as an 
-argument. See the below link for instructions on using the 
-Sleuthkit's hfind tool to create an NSRL database index file.
+This module takes a semi-colon delimited list of arguments:
+
+     -k <path> The path of a 'known' files hash database.
+     -b <path> The path of a 'known bad' or 'notable' files hash database.
+               Multiple 'known bad' hash sets may be specified.
+     -b        A flag directing the module to issue a pipeline stop request if
+               a hash set hit occurs.
+
+
+The module requires that at least one hash database indexed using the Sleuth 
+Kit's tool is specified in its arguments.  See the link below for instructions
+on using the Sleuthkit's hfind tool to create an NSRL database index file.
 
   http://www.sleuthkit.org/informer/sleuthkit-informer-7.html#nsrl 
 
 
 RESULTS
 
-Currently, if the hash is found in the NSRL, the module
-will request that the file analysis pipeline for the file
-stop.
-
+Each hash set hit that is found is posted to the blackboard. If directed to do
+so, the module will also stop the file analysis pipeline for the file when a hit 
+occurs.
 
 TODO:
- - Provide an initialization argument to determine whether or not STOP requests 
-   are issued when a look up succeeds.
- - Support additional hash databases, possibly in separate modules.
- - Support notable file look ups, e.g., in user-specified EnCase hash sets. 
- - Record the look up results on the blackboard. 
  - Make a downstream module to issue stop requests after reading results 
    from the blackboard. This would allow for multiple decision making criteria
    and would support the ability to insert additional processing between the 
