@@ -29,7 +29,7 @@ This module takes a semi-colon delimited list of arguments:
      -k <path> The path of a 'known' files hash database.
      -b <path> The path of a 'known bad' or 'notable' files hash database.
                Multiple 'known bad' hash sets may be specified.
-     -b        A flag directing the module to issue a pipeline stop request if
+     -s        A flag directing the module to issue a pipeline stop request if
                a hash set hit occurs.
 
 

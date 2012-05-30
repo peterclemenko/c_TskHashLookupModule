@@ -75,6 +75,45 @@ static TSK_HDB_INFO* openHashDatabaseIndexFile(const std::string& hashDatabasePa
 
 extern "C" 
 {
+    #ifdef _MSC_VER
+        #pragma warning( push )
+        #pragma warning( disable: 4190 )
+    #endif
+ 
+    /**
+     * Module identification function. 
+     *
+     * @return The name of the module as a std::string.
+     */
+    std::string name()
+    {
+        return "TskHashLookup";
+    }
+
+    /**
+     * Module identification function. 
+     *
+     * @return A description of the module as a std::string.
+     */
+    std::string description()
+    {
+        return "";
+    }
+
+    /**
+     * Module identification function. 
+     *
+     * @return The version of the module as a std::string.
+     */
+    std::string version()
+    {
+        return "0.0.0";
+    }
+
+    #ifdef _MSC_VER
+        #pragma warning( pop )
+    #endif
+
     /**
      * Module initialization function. 
      *
@@ -84,7 +123,7 @@ extern "C"
      *      -b <path> The path of a TSK-indexed hash database for a known bad 
      *                files hash set. Multiple known bad hash sets may be 
      *                specified.
-     *      -b        A flag directing the module to issue a pipeline stop 
+     *      -s        A flag directing the module to issue a pipeline stop 
      *                request if a hash set hit occurs.
      * @return TskModule::OK if initialization succeeded, otherwise TskModule::FAIL.
      */
