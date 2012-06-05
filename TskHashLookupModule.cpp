@@ -16,6 +16,7 @@
  */
 
 // System includes
+#include <string>
 #include <vector>
 #include <sstream>
 
@@ -76,6 +77,36 @@ static TSK_HDB_INFO* openHashDatabaseIndexFile(const std::string& hashDatabasePa
 extern "C" 
 {
     /**
+     * Module identification function. 
+     *
+     * @return The name of the module as a std::string.
+     */
+    const char* name()
+    {
+        return "TskHashLookup";
+    }
+
+    /**
+     * Module identification function. 
+     *
+     * @return A description of the module as a std::string.
+     */
+    const char* description()
+    {
+        return "";
+    }
+
+    /**
+     * Module identification function. 
+     *
+     * @return The version of the module as a std::string.
+     */
+    const char* version()
+    {
+        return "0.0.0";
+    }
+
+    /**
      * Module initialization function. 
      *
      * @param args A semicolon delimited list of arguments:
@@ -84,12 +115,14 @@ extern "C"
      *      -b <path> The path of a TSK-indexed hash database for a known bad 
      *                files hash set. Multiple known bad hash sets may be 
      *                specified.
-     *      -b        A flag directing the module to issue a pipeline stop 
+     *      -s        A flag directing the module to issue a pipeline stop 
      *                request if a hash set hit occurs.
      * @return TskModule::OK if initialization succeeded, otherwise TskModule::FAIL.
      */
-    TskModule::Status TSK_MODULE_EXPORT initialize(std::string& args)
+    TskModule::Status TSK_MODULE_EXPORT initialize(const char* arguments)
     {
+        std::string args(arguments);
+
         // At least one hash database path must be provided.
         if (args.empty()) {
             LOGERROR(L"TskHashLookupModule::initialize - passed empty argument string.");
