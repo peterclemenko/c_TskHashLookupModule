@@ -93,7 +93,7 @@ extern "C"
      */
     TSK_MODULE_EXPORT const char *description()
     {
-        return "";
+        return "Looks up a file's MD5 hash value in one or more hash databases that have been indexed using the Sleuth Kit's hfind tool";
     }
 
     /**
