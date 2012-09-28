@@ -14,6 +14,14 @@ Sleuth Kit's hfind tool.  Hash databases are used to identify files that are
 'known' and previously seen.  Known files can be both good (such as standard 
 OS files) or bad (such as contraband).
 
+DEPLOYMENT REQUIREMENTS
+
+The module requires that at least one hash database indexed using the Sleuth 
+Kit's hfind tool is specified in its arguments.  See the link below for instructions
+on using the Sleuthkit's hfind tool to create an NSRL database index file.
+
+  http://www.sleuthkit.org/informer/sleuthkit-informer-7.html#nsrl 
+
 
 USAGE
 
@@ -31,13 +39,6 @@ This module takes a semi-colon delimited list of arguments:
                Multiple 'known bad' hash sets may be specified.
      -s        A flag directing the module to issue a pipeline stop request if
                a hash set hit occurs.
-
-
-The module requires that at least one hash database indexed using the Sleuth 
-Kit's tool is specified in its arguments.  See the link below for instructions
-on using the Sleuthkit's hfind tool to create an NSRL database index file.
-
-  http://www.sleuthkit.org/informer/sleuthkit-informer-7.html#nsrl 
 
 
 RESULTS
