@@ -213,7 +213,7 @@ extern "C"
                         hashSetHit = true;
                     }
                     TskBlackboardArtifact artifact = blackBoard.createArtifact(pFile->getId(), TSK_HASHSET_HIT);
-                    TskBlackboardAttribute attribute(TSK_HASHSET_NAME, "TskHashLookupModule", "", (*it)->db_name);
+                    TskBlackboardAttribute attribute(TSK_SET_NAME, "TskHashLookupModule", "", (*it)->db_name);
                     artifact.addAttribute(attribute);
                 }
             }
@@ -224,7 +224,7 @@ extern "C"
                 imageDB.updateKnownStatus(pFile->getId(), TskImgDB::IMGDB_FILES_KNOWN);
                 hashSetHit = true;
                 TskBlackboardArtifact artifact = blackBoard.createArtifact(pFile->getId(), TSK_HASHSET_HIT);
-                TskBlackboardAttribute attribute(TSK_HASHSET_NAME, "TskHashLookupModule", "", knownHashDBInfo->db_name);
+                TskBlackboardAttribute attribute(TSK_SET_NAME, "TskHashLookupModule", "", knownHashDBInfo->db_name);
                 artifact.addAttribute(attribute);
             }
         }
