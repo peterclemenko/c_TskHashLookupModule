@@ -27,9 +27,18 @@
 // Poco includes
 #include "Poco/StringTokenizer.h"
 
-static bool issueStopRequestsOnHits = false;
-static TSK_HDB_INFO* knownHashDBInfo = NULL;
-static std::vector<TSK_HDB_INFO*> knownBadHashDBInfos;
+namespace
+{
+    const char *MODULE_NAME = "TskHashLookup";
+    const char *MODULE_DESCRIPTION = "Looks up a file's MD5 hash value in one or more hash databases that have been indexed using the Sleuth Kit's hfind tool";
+    const char *MODULE_VERSION = "1.0.0";
+
+    static bool issueStopRequestsOnHits = false;
+    static TSK_HDB_INFO* knownHashDBInfo = NULL;
+    static std::vector<TSK_HDB_INFO*> knownBadHashDBInfos;
+}
+
+
 
 /**
  * Helper function to open the index file for a TSK-indexed hash database.
@@ -83,7 +92,7 @@ extern "C"
      */
     TSK_MODULE_EXPORT const char *name()
     {
-        return "TskHashLookup";
+        return MODULE_NAME;
     }
 
     /**
@@ -93,7 +102,7 @@ extern "C"
      */
     TSK_MODULE_EXPORT const char *description()
     {
-        return "Looks up a file's MD5 hash value in one or more hash databases that have been indexed using the Sleuth Kit's hfind tool";
+        return MODULE_DESCRIPTION;
     }
 
     /**
@@ -103,7 +112,7 @@ extern "C"
      */
     TSK_MODULE_EXPORT const char *version()
     {
-        return "1.0.0";
+        return MODULE_VERSION;
     }
 
     /**
